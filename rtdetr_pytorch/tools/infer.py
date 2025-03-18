@@ -176,8 +176,13 @@ def main(args, ):
     else:
         output = model(im_data, orig_size)
         labels, boxes, scores = output
+        labels = labels.cpu().detach().numpy()
+        boxes = boxes.cpu().detach().numpy() 
+        scores = scores.cpu().detach().numpy()
+        labels, boxes, scores = postprocess(labels[0], boxes[0], scores[0])
+
         
-    draw([im_pil], labels, boxes, scores, 0.6)
+    draw([im_pil], labels, boxes, scores, 0.2)
   
 if __name__ == '__main__':
     import argparse
